@@ -31,7 +31,7 @@ const App = () => {
         <Route path="/idcard" element={<IdentityCard />} />
         
         
-        <Route path="/login_for_icard" element={<Login_For_Icard  />} />
+        <Route path="/" element={<Login_For_Icard  />} />
 
 
       </Routes>
