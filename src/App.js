@@ -23,6 +23,8 @@ const App = () => {
     <ContextProvider>
     <Router>
       <Routes>
+      <Route path="/" element={<Login_For_Icard  />} />
+ 
         <Route exact path="/school" element={<AdminLteSchoolForm />}  />
         <Route path="school/schoolSuccess" element={<AdminLteSchoolSuccessForm />} />
 
@@ -31,8 +33,7 @@ const App = () => {
         <Route path="/idcard" element={<IdentityCard />} />
         
         
-        <Route path="/" element={<Login_For_Icard  />} />
-
+       
 
       </Routes>
     </Router>
