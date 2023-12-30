@@ -23,8 +23,8 @@ const App = () => {
     <ContextProvider>
     <Router>
       <Routes>
-        <Route exact path="/school" element={<AdminLteSchoolForm />}  />
-        <Route path="/school/schoolSuccess" element={<AdminLteSchoolSuccessForm />} />
+        <Route exact path="/" element={<AdminLteSchoolForm />}  />
+        <Route path="/schoolSuccess" element={<AdminLteSchoolSuccessForm />} />
 
         <Route path="/student" element={<AdminLteStudentForm />} />
         
