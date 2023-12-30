@@ -186,7 +186,7 @@ const AdminLteSchoolForm = (props)  =>{
          // console.log(formData);
          setSchoolData(school);
          localStorage.setItem('school', JSON.stringify(school));
-          navigate(`/schoolSuccess`)
+          navigate(`/school/schoolSuccess`)
 }
 else{
    alert("Please fill in all required fields and upload images.");
