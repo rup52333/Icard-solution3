@@ -1,9 +1,10 @@
-import React, { useState,useContext } from 'react';
+import React, { useState,useContext ,useEffect} from 'react';
 import Logo from './assets/images/rvssGroup_white.png';
 import 'admin-lte/plugins/fontawesome-free/css/all.min.css';
 import 'admin-lte/plugins/daterangepicker/daterangepicker.js' ;
 import 'admin-lte/dist/css/adminlte.min.css';
 import 'admin-lte/dist/js/adminlte.min.js';
+
 
 import { useNavigate } from "react-router-dom";
 import { IcardContext } from './Context/DataProvider.jsx';
@@ -13,14 +14,79 @@ const AdminLteSchoolSuccessForm = (props) => {
    const {idcardtemplate } = useContext(IcardContext); // Import and destructure setAccount
    const {schoolData } = useContext(IcardContext);
    const {icardlogo } = useContext(IcardContext);
-  //  console.log(idcardtemplate);
-  //  console.log(schoolData);
+    
+   const  { isUserLoggedIn} = useContext(IcardContext); 
+  
+   const navigate = useNavigate();
+
+
+
+  //  console.log(idcardtemplate);  
+   console.log(schoolData);
   //  console.log(icardlogo);
 
    const imgurl=schoolData.schoolFiles.image1_location;
   console.log(imgurl);
+  const date=new Date(schoolData.school_registration_date).toISOString();
 
    const handleSubmit = (e) => { e.preventDefault()}
+
+
+
+
+   const [base64Image, setBase64Image] = useState('');
+
+// ...
+
+// Function to convert image to Base64
+const getImageBase64 = async (url) => {
+  try {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Use the function to get Base64-encoded image
+useEffect(() => {
+  const fetchImage = async () => {
+    try {
+      const base64Image = await getImageBase64(imgurl);
+      setBase64Image(base64Image);
+    } catch (error) {
+      console.error('Error fetching image:', error);
+      // Handle error, e.g., set a default image
+      setBase64Image('https://cdn.pixabay.com/photo/2014/04/02/10/35/book-303927_960_720.png');
+    }
+  };
+
+  fetchImage();
+}, [imgurl]);
+
+
+
+
+
+
+// Rest of your existing code...
+
+
+
+
+
+
+
+
+
+
+
 
     return (
       
@@ -237,7 +303,8 @@ const AdminLteSchoolSuccessForm = (props) => {
               </script>
             </div>
             <div className="form-group">
-              <label htmlFor="inputName">Date of Registration: {schoolData.school_registration_date.toISOString().split('T')[0]}</label>
+
+              <label htmlFor="inputName">Date of Registration: {date.split('T')[0]}</label>
               
             </div>
             <div className="form-group">
@@ -296,7 +363,7 @@ const AdminLteSchoolSuccessForm = (props) => {
         </div>
         <div className="form-group">
              
-              <label htmlFor="inputName">Principal Mobile Number: {schoolData.phones.mobile_number}  </label>
+              <label htmlFor="inputName">Principal Mobile Number: {schoolData.principal.phones.mobile_number}  </label>
               
               <div class="input-group-prepend">
               <span class="input-group-text"><i class="fas fa-phone"></i></span>
@@ -312,6 +379,21 @@ const AdminLteSchoolSuccessForm = (props) => {
        
         </div>
              <button type="button" class="btn btn-block btn-success btn-sm">Success</button>
+             <div>
+      {isUserLoggedIn ? (
+        // Show the "Edit" button when the user is logged in
+        <button type="button" className="btn btn-block btn-success btn-sm" onClick={()=>navigate(`/school/schoolSuccess/edit`)}>Edit</button>
+      ) : (
+        // Show the "Back" button when the user is not logged in
+        <>
+          <button type="button" className="btn btn-block btn-info btn-sm" style={{ backgroundColor: '#3498db' }}
+          onClick={()=>navigate(`/school`)}>
+            Back
+          </button>
+         
+        </>
+      )}
+    </div>
           </form>
         </div>
         </div>
@@ -426,8 +508,9 @@ idcardtemplate==='template1'?
 
       </div>
       <div style={{ width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <img src={imgurl} alt="Student" style={{ width: '100%' }} />
-
+      {base64Image && (
+  <img src={base64Image} alt="School Logo" style={{ width: '100%' }} />
+)}
       </div>
     </div>
   </div>
@@ -464,8 +547,9 @@ idcardtemplate==='template1'?
       fontSize:'25px',
       display:'flex'
     }}><div style={{ width: '30%', display: 'flex', justifyContent: 'center', alignItems: 'center',marginRight:'3%' }}>
-       <img src={imgurl} alt="Student" style={{ width: '100%' }} />
-
+        {base64Image && (
+  <img src={base64Image} alt="School Logo" style={{ width: '100%' }} />
+)}
   </div>            {schoolData.school_name}</div>
     <p style={{
       fontFamily: 'Verdana, sans-serif', // Changed font
@@ -572,8 +656,9 @@ idcardtemplate==='template1'?
           height:'100%'
         }}>
           <div style={{ width: '30%', display: 'flex', justifyContent: 'center', alignItems: 'center',paddingLeft:'2%',paddingRight:'2%' }}>
-          <img src={imgurl} alt="Student" style={{ width: '100%' }} />
-
+          {base64Image && (
+  <img src={base64Image} alt="School Logo" style={{ width: '100%' }} />
+)}
           </div>
             {schoolData.school_name}
 

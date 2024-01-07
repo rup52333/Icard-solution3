@@ -18,32 +18,63 @@ const Login_For_Icard =(props) => {
    const navigate = useNavigate();
  
    const  { isUserLoggedIn, setIsUserLoggedIn} = useContext(IcardContext); 
-
-   useEffect(() => {
+   const  { userLoggedInEmail, setUserLoggedInEmail} = useContext(IcardContext); 
+   const {setSchoolData } = useContext(IcardContext);
   
+  
+   const storedData = JSON.parse(localStorage.getItem('school'));
+  console.log(storedData)
+      
+     
 
-      if (isUserLoggedIn) {
-        // If the user has signed in, retrieve their role and navigate accordingly
-       
-        if (selectedRole === 'Sign in as a school') {
-          navigate('/school');
-        } else{
-          navigate('/student');
-        }
-      }
-    }, []);
-
-
-
-   const  handleGoogleLogin = (response) => {
-      console.log(response);
-      setIsUserLoggedIn(true);
+   const handleGoogleLogin = (response) => {
+     
+      
+      
+    
       if (selectedRole === 'Sign in as a school') {
-         navigate('/school'); // Navigate to the school route
-       } else {
-         navigate('/student'); // Navigate to the student route
-       }
-   };
+        // Check if the user has completed registration
+        if (storedData.school_adminEmail === response.email) {
+         setIsUserLoggedIn(true)
+         setUserLoggedInEmail(response.email);
+          // User has completed registration
+         //  navigate('/schoolsuccess'); // Navigate to the school success page
+
+
+
+      //  funny
+           // const matchingObject = storedData.find(obj => obj.school_adminEmail === userLoggedInEmail);
+      const matchingObject=storedData;
+
+       setSchoolData(matchingObject)
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         navigate(`/school/schoolSuccess`)
+        } else {
+          // User has not completed registration
+          navigate('/school', { state: { error: 'Please complete your registration first', color: 'red' } }); // Navigate to the school page with an error message
+        }
+      } else {
+        navigate('/student'); // Navigate to the student route
+      }
+    };
+    
  
    const handleRadioChange = (event) => {
      setSelectedRole(event.target.value);

@@ -12,6 +12,8 @@ const ContextProvider = ({children}) => {
     const [ icardimg, setIcardimg ] = useState('');
     const [ icardlogo, setIcardlogo ] = useState('');
     const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+    const [userLoggedInEmail, setUserLoggedInEmail] = useState("");
+
 
     const [schoolData, setSchoolData] = useState('');
 
@@ -21,7 +23,7 @@ const ContextProvider = ({children}) => {
 
     
     return (
-        <IcardContext.Provider value={{ idcardtemplate, setIdcardtemplate,obj, setObj,icardimg, setIcardimg,isUserLoggedIn, setIsUserLoggedIn ,schoolData, setSchoolData,icardlogo, setIcardlogo}}>
+        <IcardContext.Provider value={{ idcardtemplate, setIdcardtemplate,obj, setObj,icardimg, setIcardimg,isUserLoggedIn, setIsUserLoggedIn ,schoolData, setSchoolData,icardlogo, setIcardlogo,userLoggedInEmail, setUserLoggedInEmail}}>
             {children}
         </IcardContext.Provider>
     )

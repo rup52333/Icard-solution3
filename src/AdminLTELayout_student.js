@@ -5,7 +5,7 @@ import 'admin-lte/plugins/daterangepicker/daterangepicker.js' ;
 import 'admin-lte/dist/css/adminlte.min.css';
 import 'admin-lte/dist/js/adminlte.min.js';
 import ImageUpload from './ImageUpload.js';
-import KVSIMG from './template/WhatsApp Image 2023-08-14 at 12.26.25 PM.jpeg';
+
 import {useNavigate} from 'react-router-dom';
 import Icard_template from './template/Icard_template.jsx';
 import {IcardContext} from './Context/DataProvider.jsx';

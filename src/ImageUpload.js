@@ -8,8 +8,8 @@ import {IcardContext} from './Context/DataProvider.jsx';
 function ImageUpload({school_id, image_id, onImageUpload}) {
  const {setIcardimg} = useContext(IcardContext); // Import and destructure setAccount
  const {setIcardlogo} = useContext(IcardContext); // Import and destructure setAccount
-
-
+ const {schoolData } = useContext(IcardContext);
+ const  { isUserLoggedIn} = useContext(IcardContext); 
 
   useEffect(() => {
     setIcardimg(""); // Set it to an empty string, you can change this to your desired default value
@@ -151,7 +151,14 @@ onImageUpload(imageData);
               title='test_image'
               onLoad={handleIframeLoad}
               style={{ display: isIframeVisible ? 'block' : 'none' }} 
-              src={imageUrl} 
+              src={
+                isUserLoggedIn && school_id === 1
+                  ? schoolData.schoolFiles.image1_location
+                  : isUserLoggedIn && school_id === 2
+                    ? schoolData.schoolFiles.image2_location
+                    : imageUrl
+              } 
+
               allowFullScreen
               />
               <img

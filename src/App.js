@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import AdminLteStudentForm from './AdminLTELayout_student.js';
 import AdminLteSchoolForm from './AdminLTELayout_school.js';
+import AdminLteSchoolFormEdit from './AdminLTELayout_school_edit.js';
 import AdminLteSchoolSuccessForm from './AdminLTELayout_school_success.js'
 import { useState,useContext } from 'react';
 import SchoolDetails from './SchoolDetails.js';
@@ -27,6 +28,7 @@ const App = () => {
  
         <Route exact path="/school" element={<AdminLteSchoolForm />}  />
         <Route path="school/schoolSuccess" element={<AdminLteSchoolSuccessForm />} />
+        <Route path="school/schoolSuccess/edit" element={<AdminLteSchoolFormEdit />} />
 
         <Route path="/student" element={<AdminLteStudentForm />} />
         
