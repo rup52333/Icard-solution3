@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Carousel from 'react-multi-carousel'; // Import as default
 import 'react-multi-carousel/lib/styles.css';
 import Template1 from './Template1';
@@ -13,12 +13,11 @@ const componentsToShow = [
 ];
 
 function Icard_template() {
-  const { idcardtemplate,setIdcardtemplate } = useContext(IcardContext);
+  const { idcardtemplate, setIdcardtemplate, isUserLoggedIn, schoolData } = useContext(IcardContext);
 
   const [selectedId, setSelectedId] = useState(null);
 
   const handleComponentClick = (componentKey) => {
-   
     if (componentKey === selectedId) {
       // If clicked component is already selected, deselect it
       setSelectedId(null);
@@ -29,6 +28,15 @@ function Icard_template() {
       setIdcardtemplate(componentKey); // Store the selected template ID in context
     }
   };
+
+  useEffect(() => {
+    // If user is logged in and icard_template is available in schoolData, select it by default
+    if (isUserLoggedIn && schoolData?.icard_template) {
+      setSelectedId(schoolData.icard_template);
+      setIdcardtemplate(schoolData.icard_template);
+    }
+  }, [isUserLoggedIn, schoolData, setIdcardtemplate]);
+
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },

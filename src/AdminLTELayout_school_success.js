@@ -1,7 +1,7 @@
 import React, { useState,useContext ,useEffect} from 'react';
 import Logo from './assets/images/rvssGroup_white.png';
 import 'admin-lte/plugins/fontawesome-free/css/all.min.css';
-import 'admin-lte/plugins/daterangepicker/daterangepicker.js' ;
+import 'admin-lte/plugins/daterangepicker/daterangepicker.js';
 import 'admin-lte/dist/css/adminlte.min.css';
 import 'admin-lte/dist/js/adminlte.min.js';
 
@@ -11,14 +11,14 @@ import { IcardContext } from './Context/DataProvider.jsx';
 
 
 const AdminLteSchoolSuccessForm = (props) => {
-   const {idcardtemplate } = useContext(IcardContext); // Import and destructure setAccount
+  
    const {schoolData } = useContext(IcardContext);
    const {icardlogo } = useContext(IcardContext);
     
    const  { isUserLoggedIn} = useContext(IcardContext); 
   
    const navigate = useNavigate();
-
+   const idcardtemplate=schoolData.icard_template;
 
 
   //  console.log(idcardtemplate);  

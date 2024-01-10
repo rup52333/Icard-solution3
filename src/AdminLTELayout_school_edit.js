@@ -36,7 +36,8 @@ const AdminLteSchoolFormEdit= (props)  =>{
   //console.log(idcardtemplate);
  
 const school_id = schoolData.school_id;
-const date=new Date(schoolData.school_registration_date).toISOString();
+const date=new Date(schoolData.school_registration_date);
+
 
   const schoolNames = [
    'The Doon School',
@@ -51,26 +52,24 @@ const date=new Date(schoolData.school_registration_date).toISOString();
 
     const navigate = useNavigate();
     const [formState, setFormState] = useState({});
-    const [startDate, setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(new Date(schoolData.school_registration_date));
+
     const [submit, setSubmitData] =  useState('');
     const [formData, setFormData] = useState({
       school_id: school_id,
-      school_name: '' ,
-      school_email: '',
-      school_registration_date: startDate,
-      school_address: '',
-      school_city: '',
-      school_state: '',
-      school_image1:'',
-      school_image1_location:'',
-      school_image2:'',
-      school_image2_location:'',
-      school_mobile_number:'',
-      school_fax:'',
-      principal_salutation:'',
-      principal_name:'',
-      principal_email:'',
-      principal_mobile_number:'',
+      school_name: schoolData.school_name || '',
+      school_email: schoolData.school_email || '',
+      school_registration_date: startDate, // Use your logic to set the date here
+      school_address: schoolData.school_address || '',
+      school_city: schoolData.school_city || '',
+      school_state: schoolData.school_state || '',
+      school_pincode: schoolData.school_pincode || '',
+      school_mobile_number: schoolData.phones.mobile_number || '',
+      school_fax: schoolData.phones.fax || '',
+      principal_salutation: schoolData.principal.salutation || '',
+      principal_name: schoolData.principal.name || '',
+      principal_email: schoolData.principal.email || '',
+      principal_mobile_number: schoolData.principal.phones.mobile_number || '',
     });
     
     function createPrincipal(principal_salutation, principal_name,principal_email,phones) {
@@ -187,7 +186,7 @@ const date=new Date(schoolData.school_registration_date).toISOString();
       var principal = createPrincipal(formData.principal_salutation,formData.principal_name,formData.principal_email,principal_phones);
       var schoolFiles = createSchoolFiles(formData.school_image1,
          formData.school_image1_location,formData.school_image2,formData.school_image2_location);
-      var school=createSchool(school_id,formData.school_name,formData.school_email,formData.school_registration_date,
+      var school=createSchool(school_id,formData.school_name,formData.school_email,schoolData.school_registration_date,
          formData.school_address,formData.school_city,formData.school_state,formData.school_pincode,school_phones,principal,schoolFiles);
          
           // console.log(school);
@@ -437,15 +436,16 @@ else{
 />
 
 
-              <script>
-                // alert(schoolData.school_name);
-              </script>
             </div>
             <div className="form-group">
               <label htmlFor="inputName">Date of Registration</label>
-              <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} 
-              id ="dateOfRegistration" name="school_registration_date"  
-              value = {date.split('T')[0]}/>
+              <DatePicker
+    id="dateOfRegistration"
+    name="school_registration_date"
+    selected={startDate}
+    
+/>
+
             </div>
             <div className="form-group">
               <label htmlFor="inputName">School Address</label>
@@ -481,7 +481,8 @@ else{
             <div className="form-group">
               <label htmlFor="inputName">Pincode</label>
               <input type="text" name="school_pincode" className="form-control" 
-                   id="school_pincode" value = {schoolData.school_pincode} placeholder=" Enter School Address" onChange={handleChange} />
+                   id="school_pincode" value={formData.school_pincode}
+                   placeholder=" Enter School Address" onChange={handleChange} />
             </div>
 <div class="row">
     <div class="col-12 col-sm-6">
@@ -492,7 +493,8 @@ else{
                         <input type="text" className="form-control" 
                          id="school_mobile_number"
                          name="school_mobile_number" 
-                         value = {schoolData.phones.mobile_number}
+                          value={formData.school_mobile_number}
+                        
                          placeholder="Primary Contact" 
                          onChange={handleChange} />
               </div>
@@ -504,7 +506,7 @@ else{
               <span class="input-group-text"><i class="fas fa-phone"></i></span>
               <input type="text"  className="form-control" id="fax" 
               name="school_fax"
-              value = {schoolData.phones.fax}
+              value = {formData.school_fax}
               placeholder=" Enter School Fax Number"
               onChange={handleChange} />
               </div>
@@ -519,7 +521,7 @@ else{
                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
               </div>
                 <input type="email" name="school_email" className="form-control" id="school_email"
-                 placeholder="Enter School Phone Admin Email Address" value ={schoolData.school_email} onChange={handleChange}  />
+                 placeholder="Enter School Phone Admin Email Address" value ={formData.school_email} onChange={handleChange}  />
             </div>
         <div class="card card-primary">
         <div class="card-header">
@@ -528,7 +530,7 @@ else{
         <div class="form-group">
                      <label>Salutation</label>
                                           <select class="custom-select"id="principal_salutation" 
-                                          name="principal_salutation" value={schoolData.principal.salutation} onChange={handleChange}>
+                                          name="principal_salutation" value={formData.principal_salutation} onChange={handleChange}>
                                              <option value="">Select an option</option>
                                              <option>Dr.</option>
                                              <option>Mr.</option>
@@ -539,7 +541,7 @@ else{
         <div className="form-group">
               <label htmlFor="inputName">Principal Name</label>
               <input type="text" name="principal_name" className="form-control" id="principal_name" 
-              placeholder="Enter Principal Name" value ={schoolData.principal.name} 
+              placeholder="Enter Principal Name" value ={formData.principal_name} 
             onChange={handleChange} 
               />
         </div>
@@ -551,7 +553,7 @@ else{
               <span class="input-group-text"><i class="fas fa-phone"></i></span>
               <input type="text"  className="form-control" id="principal_mobile_number" 
               name="principal_mobile_number"
-              value = {schoolData.principal.phones.mobile_number}
+              value = {formData.principal_mobile_number}
               placeholder="Pricipal Mobile Number"
               onChange={handleChange} />
               </div>
@@ -562,7 +564,7 @@ else{
                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
               </div>
               <input type="email" name="principal_email" className="form-control" id="principal_email"
-                 placeholder="Principal Email" value ={schoolData.principal.email} onChange={handleChange}  />
+                 placeholder="Principal Email" value ={formData.principal_email} onChange={handleChange}  />
         </div>
         
        

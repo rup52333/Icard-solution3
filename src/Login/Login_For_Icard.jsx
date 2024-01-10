@@ -42,27 +42,12 @@ const Login_For_Icard =(props) => {
 
 
 
-      //  funny
+      //  I have to implement this when real database work
            // const matchingObject = storedData.find(obj => obj.school_adminEmail === userLoggedInEmail);
       const matchingObject=storedData;
 
        setSchoolData(matchingObject)
        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
          navigate(`/school/schoolSuccess`)

@@ -65,6 +65,7 @@ const AdminLteSchoolForm = (props)  =>{
       principal_mobile_number:'',
     });
     
+ 
     function createPrincipal(principal_salutation, principal_name,principal_email,phones) {
       return {
          salutation: principal_salutation,
@@ -428,9 +429,7 @@ else{
   onChange={handleChange}
 />
 
-              <script>
-                 //alert("school name");
-              </script>
+
             </div>
             <div className="form-group">
               <label htmlFor="inputName">Date of Registration</label>
